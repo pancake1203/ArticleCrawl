@@ -11,9 +11,16 @@ def get_md5(url):
     return m.hexdigest()
 
 
-def extract_num(str):
-    match = re.match(".*?(d+).*", str)
+def extract_num(text):
+    match = re.match(".*?(\d+).*", text)
     if match:
-        return int(match.group(1))
+        num = int(match.group(1))
     else:
-        return 0
+        num = 0
+    return num
+
+
+def remove_num_dot(text):
+    num_list = text.split(',')
+    num = int("".join(num_list))
+    return num

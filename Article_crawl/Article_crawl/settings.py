@@ -9,6 +9,9 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+import sys
+
 BOT_NAME = 'Article_crawl'
 
 SPIDER_MODULES = ['Article_crawl.spiders']
@@ -19,7 +22,7 @@ NEWSPIDER_MODULE = 'Article_crawl.spiders'
 #USER_AGENT = 'Article_crawl (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -33,7 +36,7 @@ ROBOTSTXT_OBEY = True
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -64,10 +67,11 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#     # 'Article_crawl.pipelines.ArticleCrawlPipeline': 300,
-#     'Article_crawl.pipelines.MysqlPipeline': 300,
-# }
+ITEM_PIPELINES = {
+    # 'Article_crawl.pipelines.ArticleCrawlPipeline': 300,
+    'Article_crawl.pipelines.MysqlTwistedPipeline': 300
+}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -90,4 +94,15 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_DATE_FORMAT = '%Y-%m-%d'
+
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, 'Article_crawl'))
+
+MYSQL_HOST = '127.0.0.1'
+MYSQL_DATABASE = 'scrapy_data'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'Panyanqi1203@$'
+
+MYSQL_DATE_FORMAT = '%Y/%m/%d'
+MYSQL_DATETIME_FORMAT = '%Y/%m/%d %H:%M:%S'
